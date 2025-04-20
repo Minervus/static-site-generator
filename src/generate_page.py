@@ -112,7 +112,7 @@ def generate_pages_recursively(source_path, template_path, destination_path,base
                     print(f"Directory already exists: {current_destination_path}")
                 except Exception as e:
                     print(f"Failed to create directory: {current_destination_path} due to {e}")
-            generate_pages_recursively(current_source_path,template_path,current_destination_path)
+            generate_pages_recursively(current_source_path,template_path,current_destination_path,basepath)
 
 
 
