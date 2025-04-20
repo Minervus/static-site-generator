@@ -31,7 +31,7 @@ def extract_title(markdown):
 # if no - raise an exception
 
 # 2. generate_page(from_path, template_path, dest_path)
-def generate_page(from_path, template_path, dest_path):
+def generate_page(from_path, template_path, dest_path, basepath):
     # Print message ("Generating page from from_path to dest_path using template_path")
     print(f"Generating page from {from_path} to {dest_path} using {template_path}")
 
@@ -54,10 +54,11 @@ def generate_page(from_path, template_path, dest_path):
     page_title = extract_title(markdown_content)
 
     # Replace {{ Title }} and {{ Content }} in the template with HTML and title
-    # REPLACE NOT WORKING PROPERLY
 
     updated_template = template_content.replace("{{ Title }}",page_title)
     updated_template = updated_template.replace("{{ Content }}", html_string)
+    updated_template = updated_template.replace('"href="/"', f"href={basepath}")
+    updated_template = updated_template.replace('"src="/"', f"src={basepath}")
 
     # Write new full HTML page to a file at dest_path (create any necessary directories that don't exist)
     # check if dest_path exists - create it if not
@@ -73,7 +74,7 @@ def generate_page(from_path, template_path, dest_path):
 
 # Genenerate pages percursively https://www.boot.dev/lessons/50bf720d-808f-4a55-9dab-cea526a8d734
 
-def generate_pages_recursively(source_path, template_path, destination_path):
+def generate_pages_recursively(source_path, template_path, destination_path,basepath):
 
     # Crawl every entry in content directory
     for item in os.listdir(source_path):
@@ -99,7 +100,7 @@ def generate_pages_recursively(source_path, template_path, destination_path):
 
             if file_extension == '.md':
                     # html_file_name = file_path + '.html'
-                    generate_page(current_source_path,template_path,final_destination)
+                    generate_page(current_source_path,template_path,final_destination,basepath)
             else:
                 shutil.copy(current_source_path,current_destination_path)
         elif os.path.isdir(current_source_path):
