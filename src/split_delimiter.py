@@ -57,6 +57,7 @@ def split_nodes_delimiter(old_nodes, delimiter, text_type):
     return result
 
 def text_to_textnodes(text):
+    
 
     node = TextNode(text, TextType.TEXT)
 
@@ -213,14 +214,14 @@ def markdown_to_html_node(markdown):
             cleaned_block = clean_block(block,block_type)
             
             block_node = HTMLNode(tag=get_html_tag(block_type),value=None,children=[],props=None)
-            print(f"Created {block_node.tag} node")
+            # print(f"Created {block_node.tag} node")
             children = text_to_children(cleaned_block)
-            print(f"Children count: {len(children)}")
+            # print(f"Children count: {len(children)}")
             # add the list to the list
             # print(f"Children: {children}")
             block_node.children.extend(children)
             div_node.children.append(block_node)
-            print(f"Added {block_node.tag} to div_node")
+            # print(f"Added {block_node.tag} to div_node")
             
     apply_styles_to_node(div_node)
 
@@ -271,18 +272,19 @@ def clean_block(block, block_type):
         block = "\n".join(cleaned_lines)
         return block
     else:
-        print(f'cleaned block: {block}')
+        # print(f'cleaned block: {block}')
         return block
 
 
 
 
 def text_to_children(text):
+    # print(f"RUNNING TEXT TO CHILDREN")
     if text is None:
         print("Warning: Received None text in text_to_children")
         return []
     text = " ".join(text.split())
-    text = parse_markdown_styles(text)
+    # text = parse_markdown_styles(text)
     text_nodes = text_to_textnodes(text)
     nodes = []
     for text_node in text_nodes:
