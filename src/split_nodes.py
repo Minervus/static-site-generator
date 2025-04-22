@@ -7,6 +7,7 @@ from textnode import *
 def split_nodes_link(old_nodes):
     result = []
 
+    # print(f"list of nodes in split link: {old_nodes}")
     # Loop through list of old_nodes
     for node in old_nodes:
         # if the node's text type is NOT TEXT
@@ -49,6 +50,7 @@ def split_nodes_link(old_nodes):
             
             
             links = extract_markdown_links(current_text)
+            # print(f"Running extract_markdown_links on = {current_text}")
 
         if current_text.strip():
             result.append(TextNode(current_text, TextType.TEXT))
@@ -57,17 +59,23 @@ def split_nodes_link(old_nodes):
 
 
 def split_nodes_image(old_nodes):
+    
     result = []
+
+    
 
     # Loop through list of old_nodes
     for node in old_nodes:
         # if the node's text type is NOT TEXT
+       
         if node.text_type != TextType.TEXT:
             # add node to results list
             result.append(node)
             continue
         # extract image alt text and image links to list of tuples using extractor
         images = extract_markdown_images(node.text)
+  
+        
 
         # if no images then append node to result list
         if not images:
@@ -80,6 +88,7 @@ def split_nodes_image(old_nodes):
         while images:
             # assign alt and img from first tuple in images list
             alt, img = images[0]
+            
 
             # store markdown image as string e.g. ![alt text for image](url/of/image.jpg)
             markdown_image = f"![{alt}]({img})"
@@ -102,6 +111,7 @@ def split_nodes_image(old_nodes):
             
             
             images = extract_markdown_images(current_text)
+         
 
         if current_text.strip():
             result.append(TextNode(current_text, TextType.TEXT))
